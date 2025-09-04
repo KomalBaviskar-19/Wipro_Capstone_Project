@@ -1,0 +1,231 @@
+<div class="dashboard-container fade-in">
+  <!-- Summary Cards -->
+  <div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="summary-card">
+        <div class="summary-icon icon-patients">
+          <mat-icon>person</mat-icon>
+        </div>
+        <h3 class="summary-number">{{ summaryData.totalPatients }}</h3>
+        <p class="summary-label">Total Patient</p>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="summary-card">
+        <div class="summary-icon icon-doctors">
+          <mat-icon>local_hospital</mat-icon>
+        </div>
+        <h3 class="summary-number">{{ summaryData.totalDoctors }}</h3>
+        <p class="summary-label">Total Doctors</p>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="summary-card">
+        <div class="summary-icon icon-wards">
+          <mat-icon>home</mat-icon>
+        </div>
+        <h3 class="summary-number">{{ summaryData.totalWards }}</h3>
+        <p class="summary-label">Total Wards</p>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="summary-card">
+        <div class="summary-icon icon-labs">
+          <mat-icon>science</mat-icon>
+        </div>
+        <h3 class="summary-number">{{ summaryData.totalLabs }}</h3>
+        <p class="summary-label">Total Labs</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Patient Activity and Appointments -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mb-3">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Patients</h5>
+          <div class="d-flex align-items-center">
+            <select class="form-select form-select-sm me-2" style="width: auto;">
+              <option>7 days</option>
+              <option>30 days</option>
+              <option>All time</option>
+            </select>
+            <small class="text-muted">14.10.2021 - 20.10.2021</small>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-container" style="height: 300px;">
+            <!-- Chart will be rendered here -->
+            <div class="d-flex justify-content-center align-items-center h-100">
+              <p class="text-muted">Patient Activity Chart</p>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-4">
+              <div class="text-center">
+                <h6 class="mb-1">All time</h6>
+                <p class="mb-0 text-primary">41 234</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <h6 class="mb-1">30 days</h6>
+                <p class="mb-0 text-primary">41 234</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="text-center">
+                <h6 class="mb-1">7 days</h6>
+                <p class="mb-0 text-primary">41 234</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-4 mb-3">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Appointments</h5>
+          <div>
+            <button class="btn btn-danger btn-sm me-2" (click)="rejectAppointment(null)">Reject</button>
+            <button class="btn btn-success btn-sm" (click)="acceptAppointment(null)">Accept</button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let appointment of appointments">
+                  <td>{{ appointment.name }}</td>
+                  <td>{{ appointment.date }}</td>
+                  <td>
+                    <span class="status-badge" [ngClass]="getStatusClass(appointment.status)">
+                      {{ appointment.status }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="d-flex justify-content-between align-items-center p-3 border-top">
+            <button class="btn btn-sm btn-outline-primary" [disabled]="currentPage === 1">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <div class="d-flex gap-1">
+              <button class="btn btn-sm" 
+                      *ngFor="let page of [].constructor(totalPages); let i = index"
+                      [class]="currentPage === i + 1 ? 'btn-primary' : 'btn-outline-primary'"
+                      (click)="currentPage = i + 1">
+                {{ i + 1 }}
+              </button>
+            </div>
+            <button class="btn btn-sm btn-outline-primary" [disabled]="currentPage === totalPages">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Doctors and Out of Stock -->
+  <div class="row">
+    <div class="col-lg-6 mb-3">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Recent Doctors</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Mobile</th>
+                  <th>Address</th>
+                  <th>Charge</th>
+                  <th>Education</th>
+                  <th>DOB</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let doctor of recentDoctors">
+                  <td>{{ doctor.id }}</td>
+                  <td>{{ doctor.name }}</td>
+                  <td>{{ doctor.mobile }}</td>
+                  <td>{{ doctor.address }}</td>
+                  <td>{{ doctor.consultancyCharge | currency }}</td>
+                  <td>{{ doctor.education }}</td>
+                  <td>{{ doctor.dob }}</td>
+                  <td>
+                    <span class="status-badge" [ngClass]="getStatusClass(doctor.status)">
+                      {{ doctor.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteDoctor(doctor.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-6 mb-3">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Out of Stock</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Drug Name</th>
+                  <th>Expire Date</th>
+                  <th>Manufacture Date</th>
+                  <th>Price</th>
+                  <th>QTY</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let medicine of outOfStock">
+                  <td>{{ medicine.id }}</td>
+                  <td>{{ medicine.drugName }}</td>
+                  <td>{{ medicine.expireDate }}</td>
+                  <td>{{ medicine.manufactureDate }}</td>
+                  <td>{{ medicine.price | currency }}</td>
+                  <td>{{ medicine.qty }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteMedicine(medicine.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

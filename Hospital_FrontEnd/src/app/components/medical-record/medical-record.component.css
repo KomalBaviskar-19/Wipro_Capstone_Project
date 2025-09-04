@@ -1,0 +1,116 @@
+.medical-record-container {
+  padding: 0;
+}
+
+.page-title {
+  color: var(--dark-color);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+}
+
+.form-control, .form-select {
+  border-radius: 10px;
+  border: 2px solid #eee;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+}
+
+.form-control.is-invalid, .form-select.is-invalid {
+  border-color: var(--danger-color);
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+  color: var(--danger-color);
+}
+
+.btn {
+  border-radius: 25px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.btn-success {
+  background: var(--success-color);
+  border: none;
+}
+
+.btn-success:hover {
+  background: #218838;
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--purple-gradient);
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: var(--danger-color);
+  border: none;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+}
+
+.table th {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark-color);
+  border-bottom: 2px solid #eee;
+  background: var(--light-color);
+}
+
+.table td {
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .btn {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.875rem;
+  }
+  
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  
+  .form-control, .form-select {
+    padding: 0.5rem 0.75rem;
+  }
+} 

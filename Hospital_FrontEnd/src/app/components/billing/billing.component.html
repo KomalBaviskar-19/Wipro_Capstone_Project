@@ -1,0 +1,160 @@
+<div class="billing-container fade-in">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="page-title mb-4">Billing Management</h2>
+    </div>
+  </div>
+
+  <!-- Billing Form -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Create Billing Record</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="billingForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <!-- Patient ID -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Patient ID</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="patientId"
+                       [class.is-invalid]="billingForm.get('patientId')?.invalid && billingForm.get('patientId')?.touched">
+                <div class="invalid-feedback" *ngIf="billingForm.get('patientId')?.invalid && billingForm.get('patientId')?.touched">
+                  {{ getErrorMessage('patientId') }}
+                </div>
+              </div>
+
+              <!-- Appointment ID -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Appointment ID</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="appointmentId"
+                       [class.is-invalid]="billingForm.get('appointmentId')?.invalid && billingForm.get('appointmentId')?.touched">
+                <div class="invalid-feedback" *ngIf="billingForm.get('appointmentId')?.invalid && billingForm.get('appointmentId')?.touched">
+                  {{ getErrorMessage('appointmentId') }}
+                </div>
+              </div>
+
+              <!-- Amount -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Amount</label>
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="amount"
+                       [class.is-invalid]="billingForm.get('amount')?.invalid && billingForm.get('amount')?.touched">
+                <div class="invalid-feedback" *ngIf="billingForm.get('amount')?.invalid && billingForm.get('amount')?.touched">
+                  {{ getErrorMessage('amount') }}
+                </div>
+              </div>
+
+              <!-- Status -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" 
+                        formControlName="status"
+                        [class.is-invalid]="billingForm.get('status')?.invalid && billingForm.get('status')?.touched">
+                  <option *ngFor="let status of statusOptions" [value]="status">{{ status }}</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="billingForm.get('status')?.invalid && billingForm.get('status')?.touched">
+                  {{ getErrorMessage('status') }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex gap-2">
+                  <button type="submit" 
+                          class="btn btn-success" 
+                          [disabled]="billingForm.invalid || loading">
+                    <mat-icon>{{ isEditing ? 'update' : 'add' }}</mat-icon>
+                    {{ isEditing ? 'Update' : 'Create' }}
+                  </button>
+                  <button type="button" 
+                          class="btn btn-primary" 
+                          (click)="resetForm()"
+                          [disabled]="loading">
+                    <mat-icon>refresh</mat-icon>
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Billing Records Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Billing Records</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Patient ID</th>
+                  <th>Appointment ID</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Payment Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let billing of billingRecords">
+                  <td>{{ billing.id }}</td>
+                  <td>{{ billing.patientId }}</td>
+                  <td>{{ billing.appointmentId || '-' }}</td>
+                  <td>{{ billing.amount | currency }}</td>
+                  <td>
+                    <span class="status-badge" [ngClass]="getStatusClass(billing.status)">
+                      {{ billing.status }}
+                    </span>
+                  </td>
+                  <td>{{ billing.issuedOn || '-' }}</td>
+                  <td>
+                    <div class="d-flex gap-1">
+                      <button class="btn btn-sm btn-outline-primary" (click)="editBilling(billing)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button class="btn btn-sm btn-outline-success" 
+                              (click)="payBilling(billing.id!)"
+                              *ngIf="billing.status === 'PENDING'">
+                        <mat-icon>payment</mat-icon>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" (click)="deleteBilling(billing.id!)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="loading">
+                  <td colspan="7" class="text-center">
+                    <mat-spinner diameter="30"></mat-spinner>
+                  </td>
+                </tr>
+                <tr *ngIf="!loading && billingRecords.length === 0">
+                  <td colspan="7" class="text-center text-muted">
+                    No billing records found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

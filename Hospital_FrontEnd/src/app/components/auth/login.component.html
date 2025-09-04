@@ -1,0 +1,55 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <div class="logo">
+        <span class="logo-icon">🏥</span>
+        <h2>MediLab Hospital</h2>
+      </div>
+      <p class="subtitle">Sign in to your account</p>
+    </div>
+    
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" 
+               class="form-control" 
+               formControlName="email"
+               placeholder="Enter your email"
+               [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        <div class="invalid-feedback" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          {{ getErrorMessage('email') }}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" 
+                 class="form-control" 
+                 formControlName="password"
+                 placeholder="Enter your password"
+                 [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          <button type="button" 
+                  class="btn btn-outline-secondary" 
+                  (click)="togglePasswordVisibility()">
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+          {{ getErrorMessage('password') }}
+        </div>
+      </div>
+      
+      <button type="submit" 
+              class="btn btn-primary btn-block" 
+              [disabled]="loginForm.invalid">
+        <mat-icon>login</mat-icon>
+        Sign In
+      </button>
+    </form>
+    
+    <div class="login-footer">
+      <p>Don't have an account? <a routerLink="/register">Sign up</a></p>
+    </div>
+  </div>
+</div> 

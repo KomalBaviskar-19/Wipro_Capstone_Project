@@ -1,0 +1,157 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--purple-gradient);
+  padding: 2rem;
+}
+
+.register-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 3rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+}
+
+.logo h2 {
+  color: var(--primary-color);
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  color: var(--gray-color);
+  margin: 0;
+}
+
+.register-form {
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--dark-color);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 2px solid #eee;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+  outline: none;
+}
+
+.form-control.is-invalid {
+  border-color: var(--danger-color);
+}
+
+.invalid-feedback {
+  font-size: 0.875rem;
+  color: var(--danger-color);
+  margin-top: 0.25rem;
+}
+
+.input-group {
+  display: flex;
+  align-items: stretch;
+}
+
+.input-group .form-control {
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+}
+
+.input-group .btn {
+  border-radius: 0 10px 10px 0;
+  border: 2px solid #eee;
+  border-left: none;
+  background: white;
+  color: var(--gray-color);
+}
+
+.btn-block {
+  width: 100%;
+  border-radius: 10px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  background: var(--purple-gradient);
+  border: none;
+  color: white;
+}
+
+.btn-block:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(111, 66, 193, 0.3);
+}
+
+.btn-block:disabled {
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+
+.register-footer {
+  text-align: center;
+}
+
+.register-footer p {
+  margin: 0;
+  color: var(--gray-color);
+}
+
+.register-footer a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    padding: 1rem;
+  }
+  
+  .register-card {
+    padding: 2rem;
+  }
+} 

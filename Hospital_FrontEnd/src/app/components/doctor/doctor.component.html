@@ -1,0 +1,115 @@
+<div class="container mt-4">
+  <h2>Doctor Management</h2>
+
+  <!-- Search Doctor -->
+  <div class="mb-3 d-flex align-items-center gap-2">
+    <input type="text" class="form-control" placeholder="Enter Doctor ID" [(ngModel)]="searchId" style="width: 150px;">
+    <button class="btn btn-warning" (click)="searchDoctor()">Search</button>
+    <button class="btn btn-secondary" (click)="resetForm()">Reset</button>
+  </div>
+
+  <!-- Doctor Form -->
+  <div class="card mb-4">
+    <div class="card-header">{{ selectedDoctorId ? 'Edit Doctor' : 'Add Doctor' }}</div>
+    <div class="card-body">
+      <form [formGroup]="doctorForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+
+          <!-- Name -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" formControlName="name"
+              [class.is-invalid]="doctorForm.get('name')?.invalid && doctorForm.get('name')?.touched">
+            <div class="invalid-feedback" *ngIf="doctorForm.get('name')?.invalid && doctorForm.get('name')?.touched">
+              Name is required and must be at least 2 characters
+            </div>
+          </div>
+
+          <!-- Specialization -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Specialization</label>
+            <input type="text" class="form-control" formControlName="specialization"
+              [class.is-invalid]="doctorForm.get('specialization')?.invalid && doctorForm.get('specialization')?.touched">
+            <div class="invalid-feedback" *ngIf="doctorForm.get('specialization')?.invalid && doctorForm.get('specialization')?.touched">
+              Specialization is required
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Experience (years)</label>
+            <input type="number" class="form-control" formControlName="experience"
+              [class.is-invalid]="doctorForm.get('experience')?.invalid && doctorForm.get('experience')?.touched">
+            <div class="invalid-feedback" *ngIf="doctorForm.get('experience')?.invalid && doctorForm.get('experience')?.touched">
+              Experience must be 0 or more
+            </div>
+          </div>
+
+          <!-- Contact Number -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Contact Number</label>
+            <input type="tel" class="form-control" formControlName="contactNumber"
+              [class.is-invalid]="doctorForm.get('contactNumber')?.invalid && doctorForm.get('contactNumber')?.touched">
+            <div class="invalid-feedback" *ngIf="doctorForm.get('contactNumber')?.invalid && doctorForm.get('contactNumber')?.touched">
+              Enter a valid 10-digit contact number
+            </div>
+          </div>
+
+          <!-- Availability Status -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Availability Status</label>
+            <select class="form-select" formControlName="availabilityStatus"
+              [class.is-invalid]="doctorForm.get('availabilityStatus')?.invalid && doctorForm.get('availabilityStatus')?.touched">
+              <option *ngFor="let status of availabilityStatusOptions" [value]="status">{{ status }}</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="doctorForm.get('availabilityStatus')?.invalid && doctorForm.get('availabilityStatus')?.touched">
+              Availability status is required
+            </div>
+          </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="doctorForm.invalid">
+          {{ selectedDoctorId ? 'Update' : 'Add' }}
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Doctor List Table -->
+  <div class="card">
+    <div class="card-header">Recent Doctors</div>
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Experience</th>
+            <th>Contact</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doctor of doctors">
+            <td>{{ doctor.id }}</td>
+            <td>{{ doctor.name }}</td>
+            <td>{{ doctor.specialization }}</td>
+            <td>{{ doctor.experience }}</td>
+            <td>{{ doctor.contactNumber }}</td>
+            <td>{{ doctor.availabilityStatus }}</td>
+            <td>
+              <button class="btn btn-sm btn-primary me-1" (click)="editDoctor(doctor)">Edit</button>
+              <button class="btn btn-sm btn-danger" (click)="deleteDoctor(doctor.id!)">Delete</button>
+            </td>
+          </tr>
+          <tr *ngIf="doctors.length === 0">
+            <td colspan="7" class="text-center text-muted">No doctors found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

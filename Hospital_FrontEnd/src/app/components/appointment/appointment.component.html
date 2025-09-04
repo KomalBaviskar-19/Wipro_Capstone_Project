@@ -1,0 +1,65 @@
+<div class="appointment-container">
+  <h2>Appointment Management</h2>
+
+  <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label>Doctor ID</label>
+      <input type="number" class="form-control" formControlName="doctorId">
+    </div>
+
+    <div class="mb-3">
+      <label>Patient ID</label>
+      <input type="number" class="form-control" formControlName="patientId">
+    </div>
+
+    <div class="mb-3">
+      <label>Scheduled At</label>
+      <input type="datetime-local" class="form-control" formControlName="scheduledAt">
+    </div>
+
+    <div class="mb-3">
+      <label>Status</label>
+      <select class="form-select" formControlName="status">
+        <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">{{ isEditing ? 'Update' : 'Create' }}</button>
+    <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+  </form>
+
+  <hr>
+
+  <h3>Appointments List</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Doctor ID</th>
+        <th>Patient ID</th>
+        <th>Scheduled At</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments">
+        <td>{{ appointment.id }}</td>
+        <td>{{ appointment.doctorId }}</td>
+        <td>{{ appointment.patientId }}</td>
+        <td>{{ appointment.scheduledAt }}</td>
+        <td>{{ appointment.status }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="editAppointment(appointment)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteAppointment(appointment.id!)">Delete</button>
+        </td>
+      </tr>
+      <tr *ngIf="loading">
+        <td colspan="6" class="text-center">Loading...</td>
+      </tr>
+      <tr *ngIf="!loading && appointments.length === 0">
+        <td colspan="6" class="text-center">No appointments found</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

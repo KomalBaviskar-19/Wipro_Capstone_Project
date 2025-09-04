@@ -1,0 +1,26 @@
+<header class="header">
+  <div class="header-left">
+    <button class="menu-btn" (click)="toggleSidebar()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="module-name">{{ currentModule }}</span>
+  </div>
+  
+  <div class="header-center">
+    <div class="logo">
+      <span class="logo-icon">🏥</span>
+      <span class="logo-text">MediCore Hospital</span>
+    </div>
+  </div>
+  
+  <div class="header-right">
+    <div class="user-info">
+      <!-- <mat-icon class="user-icon">account_circle</mat-icon> -->
+      <!-- <span class="user-name">Account: {{ currentUser }}</span> -->
+    </div>
+    <button class="notification-btn" title="Language">
+      <!-- <mat-icon>language</mat-icon> -->
+      <!-- <span class="btn-text">Language</span> -->
+    </button>
+  </div>
+</header> 

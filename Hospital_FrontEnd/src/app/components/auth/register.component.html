@@ -1,0 +1,104 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <div class="logo">
+        <span class="logo-icon">🏥</span>
+        <h2>MediLab Hospital</h2>
+      </div>
+      <p class="subtitle">Create your account</p>
+    </div>
+    
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" 
+                   class="form-control" 
+                   formControlName="firstName"
+                   placeholder="Enter your first name"
+                   [class.is-invalid]="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+            <div class="invalid-feedback" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+              {{ getErrorMessage('firstName') }}
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" 
+                   class="form-control" 
+                   formControlName="lastName"
+                   placeholder="Enter your last name"
+                   [class.is-invalid]="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+            <div class="invalid-feedback" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+              {{ getErrorMessage('lastName') }}
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" 
+               class="form-control" 
+               formControlName="email"
+               placeholder="Enter your email"
+               [class.is-invalid]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+        <div class="invalid-feedback" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+          {{ getErrorMessage('email') }}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+          <input [type]="showPassword ? 'text' : 'password'" 
+                 class="form-control" 
+                 formControlName="password"
+                 placeholder="Enter your password"
+                 [class.is-invalid]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          <button type="button" 
+                  class="btn btn-outline-secondary" 
+                  (click)="togglePasswordVisibility()">
+            <mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+          {{ getErrorMessage('password') }}
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="input-group">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" 
+                 class="form-control" 
+                 formControlName="confirmPassword"
+                 placeholder="Confirm your password"
+                 [class.is-invalid]="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+          <button type="button" 
+                  class="btn btn-outline-secondary" 
+                  (click)="toggleConfirmPasswordVisibility()">
+            <mat-icon>{{ showConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+        <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+          {{ getErrorMessage('confirmPassword') }}
+        </div>
+      </div>
+      
+      <button type="submit" 
+              class="btn btn-primary btn-block" 
+              [disabled]="registerForm.invalid">
+        <mat-icon>person_add</mat-icon>
+        Create Account
+      </button>
+    </form>
+    
+    <div class="register-footer">
+      <p>Already have an account? <a routerLink="/login">Sign in</a></p>
+    </div>
+  </div>
+</div> 

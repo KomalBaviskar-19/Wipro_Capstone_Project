@@ -1,0 +1,192 @@
+<div class="patient-container fade-in">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="page-title mb-4">Patient Management</h2>
+    </div>
+  </div>
+
+  <!-- Patient Form -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <!-- <button class="btn btn-primary" (click)="generateReport()">
+            <mat-icon>assessment</mat-icon>
+            Generate Report
+          </button> -->
+          <div class="d-flex align-items-center">
+            <input type="text" class="form-control me-2" placeholder="Patient ID" [(ngModel)]="searchId"
+              style="width: 150px;">
+            <button class="btn btn-warning" (click)="searchPatient()">
+              <!-- <mat-icon>search</mat-icon> -->
+              Search
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <!-- First Name -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" formControlName="firstName"
+                  [class.is-invalid]="patientForm.get('firstName')?.invalid && patientForm.get('firstName')?.touched">
+                <div class="invalid-feedback"
+                  *ngIf="patientForm.get('firstName')?.invalid && patientForm.get('firstName')?.touched">
+                  {{ getErrorMessage('firstName') }}
+                </div>
+              </div>
+
+              <!-- Last Name -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" formControlName="lastName"
+                  [class.is-invalid]="patientForm.get('lastName')?.invalid && patientForm.get('lastName')?.touched">
+                <div class="invalid-feedback"
+                  *ngIf="patientForm.get('lastName')?.invalid && patientForm.get('lastName')?.touched">
+                  {{ getErrorMessage('lastName') }}
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" formControlName="email"
+                  [class.is-invalid]="patientForm.get('email')?.invalid && patientForm.get('email')?.touched">
+                <div class="invalid-feedback"
+                  *ngIf="patientForm.get('email')?.invalid && patientForm.get('email')?.touched">
+                  {{ getErrorMessage('email') }}
+                </div>
+              </div>
+
+              <!-- Mobile Number -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Mobile Number</label>
+                <input type="tel" class="form-control" formControlName="phone"
+                  [class.is-invalid]="patientForm.get('mobileNumber')?.invalid && patientForm.get('mobileNumber')?.touched">
+                <div class="invalid-feedback"
+                  *ngIf="patientForm.get('mobileNumber')?.invalid && patientForm.get('mobileNumber')?.touched">
+                  {{ getErrorMessage('mobileNumber') }}
+                </div>
+              </div>
+
+             
+
+              <!-- Date of Birth -->
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" class="form-control" formControlName="dateOfBirth"
+                  [class.is-invalid]="patientForm.get('dateOfBirth')?.invalid && patientForm.get('dateOfBirth')?.touched">
+                <div class="invalid-feedback"
+                  *ngIf="patientForm.get('dateOfBirth')?.invalid && patientForm.get('dateOfBirth')?.touched">
+                  {{ getErrorMessage('dateOfBirth') }}
+                </div>
+              </div>
+
+              
+
+              <!-- Gender -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Gender</label>
+                <select class="form-select" formControlName="gender"
+                  [class.is-invalid]="patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched">
+                  <option value="">Select Gender</option>
+                  <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+                </select>
+                <div class="invalid-feedback"
+                  *ngIf="patientForm.get('gender')?.invalid && patientForm.get('gender')?.touched">
+                  {{ getErrorMessage('gender') }}
+                </div>
+              </div>
+
+              
+
+              
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="row">
+              <div class="col-12">
+                <div class="d-flex gap-2">
+                  <button type="submit" class="btn btn-success" [disabled]="patientForm.invalid || loading">
+                    <!-- <mat-icon>{{ isEditing ? 'update' : 'add' }}</mat-icon> -->
+                    {{ isEditing ? 'Update' : 'Add' }}
+                  </button>
+                  <button type="button" class="btn btn-primary" (click)="resetForm()" [disabled]="loading">
+                    <!-- <mat-icon>refresh</mat-icon> -->
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Patients Table -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Recent patients</h5>
+          <small class="text-muted"></small>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>Patient ID</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  
+                  <th>Email</th>
+                  <th>Mobile number</th>
+                  <th>Date of birth</th>
+                  <th>Gender</th>
+                  
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let patient of patients">
+                  <td>{{ patient.id }}</td>
+                  <td>{{ patient.firstName }}</td>
+                  <td>{{ patient.lastName }}</td>
+
+                  <td>{{ patient.email }}</td>
+                  <td>{{ patient.phone}}</td>
+                  <td>{{ patient.dateOfBirth }}</td>
+                  <td>{{ patient.gender }}</td>
+
+                  <td>
+                    <div class="d-flex gap-1">
+                      <button class="btn btn-sm btn-outline-primary" (click)="editPatient(patient)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger" (click)="deletePatient(patient.id!)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="loading">
+                  <td colspan="10" class="text-center">
+                    <mat-spinner diameter="30"></mat-spinner>
+                  </td>
+                </tr>
+                <tr *ngIf="!loading && patients.length === 0">
+                  <td colspan="10" class="text-center text-muted">
+                    No patients found
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

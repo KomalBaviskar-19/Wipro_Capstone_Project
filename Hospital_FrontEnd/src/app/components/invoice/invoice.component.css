@@ -1,0 +1,42 @@
+.invoice-container {
+  padding: 0;
+}
+
+.page-title {
+  color: var(--dark-color);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.table th {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--dark-color);
+  border-bottom: 2px solid #eee;
+  background: var(--light-color);
+}
+
+.table td {
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .table-responsive {
+    font-size: 0.8rem;
+  }
+  
+  .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+} 
